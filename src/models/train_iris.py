@@ -28,4 +28,4 @@ for name, model in models.items():
         mlflow.log_metric('accuracy', acc)
         mlflow.sklearn.log_model(model, artifact_path='model')
         logging.info(f"{name} -> accuracy: {acc}")
-        print(f"{name} -> accuracy: {acc}")
+        print(f"{name} -> Accuracy: {acc}")
