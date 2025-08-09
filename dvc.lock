@@ -1,0 +1,14 @@
+schema: '2.0'
+stages:
+  fetch_housing:
+    cmd: python src/data/fetch_housing.py
+    deps:
+    - path: src/data/fetch_housing.py
+      hash: md5
+      md5: df9368375a9e5d724c5bdf065224bbd9
+      size: 308
+    outs:
+    - path: data/raw/housing.csv
+      hash: md5
+      md5: fa9fe4cf24f70b69ac65fb33062ddf34
+      size: 1915795
