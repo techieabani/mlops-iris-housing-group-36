@@ -31,7 +31,7 @@ class IrisInput(BaseModel):
 def predict_iris(inp: IrisInput):
     REQUEST_COUNTER.inc()
     if model is None:
-        raise HTTPException(status_code=503, detail='Model not available')
+        raise HTTPException(status_code=503, detail='Model is not available')
     df = pd.DataFrame([inp.dict()])
     pred = model.predict(df)[0]
     return {'prediction': str(pred)}
