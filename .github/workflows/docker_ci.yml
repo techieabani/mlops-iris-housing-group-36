@@ -2,7 +2,9 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches: [ main ]
+    branches: [ develop, master ]
+    tags:
+      - 'v*' # e.g. v1.0.0
 
 jobs:
   docker:
@@ -24,9 +26,23 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
+    - name: Extract version from git
+      id: version
+      run: |
+        if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+          VERSION_TAG=${GITHUB_REF#refs/tags/}
+        else
+          VERSION_TAG=latest
+        fi
+        echo "version_tag=$VERSION_TAG" >> $GITHUB_OUTPUT
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/iris-housing-mlops:latest
+        tags: |
+          ${{ secrets.DOCKER_USERNAME }}/mlops-iris-housing-group-36:latest
+          ${{ secrets.DOCKER_USERNAME }}/mlops-iris-housing-group-36:${{ steps.version.outputs.version_tag }}
+    - name: Logout from Docker Hub
+      run: docker logout
+
