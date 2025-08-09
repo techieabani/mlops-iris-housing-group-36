@@ -2,6 +2,6 @@ stages:
   fetch_housing:
     cmd: python src/data/fetch_housing.py
     deps:
-      - src/data/fetch_housing.py
+    - src/data/fetch_housing.py
     outs:
-      - data/raw/housing.csv
+    - data/raw/housing.csv
